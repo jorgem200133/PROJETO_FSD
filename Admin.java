@@ -56,9 +56,9 @@ public class Admin {
     		    	String descricao = scanner.nextLine();
     		    	String tecnologia = "SocketTCP";
     		    	System.out.print("->Ip: ");
-    		    	String ip = scanner.nextLine();
+    		    	String ipSR = scanner.nextLine();
     		  		System.out.print("->Porto: ");
-    		    	String porto = scanner.nextLine();
+    		    	String portoSR = scanner.nextLine();
 
 
 					try {
@@ -66,7 +66,7 @@ public class Admin {
 
 						PrintWriter out = new PrintWriter(ligacao.getOutputStream(), true);
 
-						String request = "post" + " " + descricao + " " + tecnologia+ " " + ip+ " " + porto;
+						String request = "post" + " " + descricao + " " + tecnologia+ " " + ipSR + " " + portoSR + " ";
 
 						out.println(request);
 
@@ -87,11 +87,11 @@ public class Admin {
     		    	String descricao = scanner.nextLine();
     		    	String tecnologia = "JavaRMI";
     		    	System.out.print("->Ip: ");
-    		    	String ip = scanner.nextLine();
+    		    	String ipSR = scanner.nextLine();
     		  		System.out.print("->Porto: ");
-    		    	String porto = scanner.nextLine();
+    		    	String portoSR = scanner.nextLine();
     		    	System.out.print("->Nome: ");
-    		    	String name = scanner.nextLine();
+    		    	String nameSR = scanner.nextLine();
 
 
 					try {
@@ -99,7 +99,7 @@ public class Admin {
 
 						PrintWriter out = new PrintWriter(ligacao.getOutputStream(), true);
 
-						String request = "post" + " " + descricao + " " + tecnologia+ " " + ip+ " " + porto " " + name;
+						String request = "post" + " " + descricao  + " " + tecnologia + " " + ipSR+ " " + portoSR+ " " + nameSR+ " ";
 
 						out.println(request);
 
