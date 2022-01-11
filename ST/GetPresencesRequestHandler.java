@@ -80,10 +80,10 @@ public class GetPresencesRequestHandler extends Thread {
         	        hashtext = "0" + hashtext;
         	    }
         	    if(hashtext.equals(hashSI)) {
-					if (tecSR.equals(1)){
+					if (tecSR.equals("1")){
 						out.println(readFile("JavaRMI.txt"));
 					}
-					else if (tecSR.quals(2)){
+					else if (tecSR.equals("2")){
 						out.println(readFile("SocketTCP.txt"));
 					}
 				}
