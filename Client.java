@@ -22,7 +22,6 @@ public class Client {
         System.out.println("*	1 - Obter Informacao do Servico de Tickting disponivel  ");
         System.out.println("*	2 - Aceder ao servico de Ticketing         ");
         System.out.println("*	3 - Quit                                                ");
-        System.out.println("*\n************************************************************");
    		System.out.print("?-> ");
         selection = input.nextInt();
         return selection;    
@@ -41,7 +40,6 @@ public class Client {
         System.out.println("*	----------------------------------------------------    ");
         System.out.println("*	1 - Consultar Servicos de rede " + tecnologia + " ");
         System.out.println("*	2 - Quit                                                ");
-        System.out.println("*\n************************************************************");
    		System.out.print("ST-> ");
         selection = input.nextInt();
         return selection;    
@@ -60,15 +58,14 @@ public class Client {
 					int porto = SI_PORTO;
 					
 					System.out.println("+*************************************************+");
-					System.out.println("*	                                          *");
-					System.out.println("*	BEM VINDO AO SISTEMA DE IDENTIFICACAO     *");
-					System.out.println("*	                                          *");
-					System.out.println("+*************************************************+");
+					System.out.println("*	                                          ");
+					System.out.println("*	BEM VINDO AO SISTEMA DE IDENTIFICACAO     ");
+					System.out.println("*	                                          ");
 
-    		    	System.out.print("->Introduza o seu Ip: ");
+    		    	System.out.print(" *Introduza o seu Ip: ");
     		    	Scanner scanner = new Scanner(System.in);
     		    	String ip = scanner.nextLine();
-    		    	System.out.print("->Introduza um Identificador Unico seu (Ex.: nº CC, NIF,...): ");
+    		    	System.out.print(" * Introduza um Identificador Unico seu (Ex.: nº CC, NIF,...): ");
     		    	String id = scanner.nextLine();
 
 					InetAddress serverAddress = InetAddress.getByName(servidor);
@@ -91,9 +88,9 @@ public class Client {
 
 						int length=0;
 						while((msg = in.readLine())!= null){
-						if(length == 0) {System.out.println("\n 	->Chave de Acesso: " +msg +"\n");}
-						if(length == 1) {System.out.println(" 	->Ip do Servico de Tickting: " +msg +"\n");}
-						else {if (length ==2) {System.out.println(" 	->Porto do Servico de Ticketing: " + msg +"\n");}
+						if(length == 0) {System.out.println("\n *		Chave de Acesso: " +msg +";\n");}
+						if(length == 1) {System.out.println(" 	*		Ip do Servico de Tickting: " +msg +";\n");}
+						else {if (length ==2) {System.out.println("*		Porto do Servico de Ticketing: " + msg +";\n");}
 						}
 						length+=1;
   						  }
@@ -110,7 +107,7 @@ public class Client {
             		
         		case 2:
         		    {
-        		    System.out.println("E importante referir que para se conectar ao\n 	Servico de Tickting e necessario passar pelo passo 1!\n");	
+        		    System.out.println("		E importante referir que para se conectar ao\nServico de Tickting e necessario passar pelo passo 1!\n");	
         		    System.out.print("Pretende continuar (S/N:) ");
         		    Scanner scanner = new Scanner(System.in);
         		    char r = scanner.next().charAt(0);
@@ -128,18 +125,17 @@ public class Client {
 
 						ligacao = new Socket(serverAddress, portoST);
 						System.out.println("+*******************************************+");
-						System.out.println("*	                                    *");
-						System.out.println("*	BEM VINDO AO SISTEMA DE TICKTING    *");
-						System.out.println("*	                                    *");
-						System.out.println("+*******************************************+");
+						System.out.println("*	                                    ");
+						System.out.println("*	BEM VINDO AO SISTEMA DE TICKTING    ");
+						System.out.println("*	                                    ");
 
 						Scanner scanner2 = new Scanner(System.in);
 						System.out.println("\nPara iniciar, introduza os seguintes dados:");
-						System.out.print("		->Chave gerada no Servico de Identificacao: ");
+						System.out.print(" *		Chave gerada no Servico de Identificacao: ");
     		    		String hashC = scanner2.nextLine();	
-    		    		System.out.print("		->Identificador Unico utilizado: ");
+    		    		System.out.print(" *		Identificador Unico utilizado: ");
     		    		String idC = scanner2.nextLine();
-						System.out.print("		->Tipo de tecnologia dos servicos de rede que pretende consultar (1-RMI ou 2-SocketTCP): ");
+						System.out.print(" *		Tipo de tecnologia dos SR que pretende consultar (1-RMI ou 2-SocketTCP): ");
     		    		int tcnSR = scanner2.nextInt();	
     		    		do{
 

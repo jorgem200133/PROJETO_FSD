@@ -32,7 +32,7 @@ public class Admin {
 		int choice;
 		do {
 
-    		choice = menu();
+    		
     		String servidor = ST_HOST;
 			int porto = ST_PORTO;
 					
@@ -45,9 +45,10 @@ public class Admin {
 					
 			System.out.println("+*********************************************************************************+");
 			System.out.println("*	                                          ");
-			System.out.println("*	BEM VINDO AO SISTEMA DE IDENTIFICACAO     ");
+			System.out.println("*	BEM VINDO AO SISTEMA DE TICKETING (ADMINISTRADOR)     ");
 			System.out.println("*	                                          ");
-
+			
+			choice = menu();
    			switch (choice){
     		    case 1:{
     		    	System.out.print("\nIntroduza os seguintes dados acerca do Servico ed Rede a introduzir\nTecnologia: SocketTCP\n");
@@ -55,9 +56,9 @@ public class Admin {
     		    	Scanner scanner = new Scanner(System.in);
     		    	String descricao = scanner.nextLine();
     		    	String tecnologia = "SocketTCP";
-    		    	System.out.print("->Ip: ");
+    		    	System.out.print(" * Ip: ");
     		    	String ipSR = scanner.nextLine();
-    		  		System.out.print("->Porto: ");
+    		  		System.out.print(" * Porto: ");
     		    	String portoSR = scanner.nextLine();
 
 
@@ -86,11 +87,11 @@ public class Admin {
     		    	Scanner scanner = new Scanner(System.in);
     		    	String descricao = scanner.nextLine();
     		    	String tecnologia = "JavaRMI";
-    		    	System.out.print("->Ip: ");
+    		    	System.out.print(" * Ip: ");
     		    	String ipSR = scanner.nextLine();
-    		  		System.out.print("->Porto: ");
+    		  		System.out.print(" * Porto: ");
     		    	String portoSR = scanner.nextLine();
-    		    	System.out.print("->Nome: ");
+    		    	System.out.print(" * Nome: ");
     		    	String nameSR = scanner.nextLine();
 
 

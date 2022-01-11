@@ -9,6 +9,10 @@ import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.time.Instant;
 
 public class GetPresencesRequestHandler extends Thread {
 	Socket ligacao;
@@ -19,7 +23,9 @@ public class GetPresencesRequestHandler extends Thread {
 
 	static final int ST_PORTO = 3122;
 	static final String ST_HOST = "127.0.0.1"; // IP e PORTO do Serviço de Ticketing
-
+	
+	//private static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'SSSZZZZ");
+	
 	public GetPresencesRequestHandler(Socket ligacao, Presences presences) {
 		this.ligacao = ligacao;
 		this.presences = presences;
@@ -49,6 +55,7 @@ public class GetPresencesRequestHandler extends Thread {
 			br.close();
 		}
 	}
+   
 
 	public void run() {
 		try {
@@ -80,10 +87,10 @@ public class GetPresencesRequestHandler extends Thread {
         	        hashtext = "0" + hashtext;
         	    }
         	    if(hashtext.equals(hashSI)) {
-					if (tecSR.equals(1)){
+					if (tecSR.equals("1")){
 						out.println(readFile("JavaRMI.txt"));
 					}
-					else if (tecSR.quals(2)){
+					else if (tecSR.equals("2")){
 						out.println(readFile("SocketTCP.txt"));
 					}
 				}
@@ -94,18 +101,20 @@ public class GetPresencesRequestHandler extends Thread {
        				 System.err.println("I'm sorry, but MD5 is not a valid message digest algorithm");
     			}
 
-			} else{
+			} 
+			else{
 				if (metodo.equals("post")){
 					String descricao = tokens.nextToken();
 					String tecnologia = tokens.nextToken();
 					String ipSR = tokens.nextToken();
 					String portoSR = tokens.nextToken();
-
+					Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+					Instant instant = timestamp.toInstant();
 					if (tecnologia.equals("SocketTCP")){
 						PrintWriter printsocket;
 						try {
     						printsocket = new PrintWriter("SocketTCP.txt");
-    						printsocket.println(descricao + " " + tecnologia + " " + ipSR + " " + portoSR);
+    						printsocket.println(descricao + " " + ipSR + portoSR + " " + ipSR + " " + portoSR+ " "+ instant);
     						printsocket.close();
 							} catch (FileNotFoundException e) {
     							System.err.println("File doesn't exist");
@@ -117,7 +126,7 @@ public class GetPresencesRequestHandler extends Thread {
 						PrintWriter printjavarmi;
 						try {
     						printjavarmi = new PrintWriter("JavaRMI.txt");
-    						printjavarmi.println(descricao + " " + tecnologia + " " + ipSR + " " + portoSR + " " + name);
+    						printjavarmi.println(descricao + " " + ipSR + portoSR + name + " " + ipSR + " " + portoSR + " " + name + " "+ instant);
     						printjavarmi.close();
 							} catch (FileNotFoundException e) {
     							System.err.println("File doesn't exist");
