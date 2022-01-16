@@ -184,9 +184,9 @@ public class Client {
 											if(msg1.equals("")){break;}
 											StringTokenizer servicoRede = new StringTokenizer(msg1);
 											st.addRow(servicoRede.nextToken(), servicoRede.nextToken(), servicoRede.nextToken(), servicoRede.nextToken(), servicoRede.nextToken());
-											//msg2+=msg1+"\n";
+											st.print();//msg2+=msg1+"\n";
 										}
-										st.print();
+										//st.print();
 										//System.out.println("\n"+msg2);
 									}
 									if(tcnSR==1){ 
@@ -196,9 +196,9 @@ public class Client {
 											if(msg1.equals("")){break;}
 											StringTokenizer servicoRede = new StringTokenizer(msg1," ");
 											st.addRow(servicoRede.nextToken(), servicoRede.nextToken(), servicoRede.nextToken(), servicoRede.nextToken(), servicoRede.nextToken(), servicoRede.nextToken());
-											//msg2+=msg1+"\n";
+											st.print();//msg2+=msg1+"\n";
 										}
-										st.print();//System.out.println("\n"+msg2);
+										//st.print();//System.out.println("\n"+msg2);
 									}
 									//st.print();
 								} catch (IOException e) {
