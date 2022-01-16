@@ -17,6 +17,13 @@ public class presencesServer {
 
 		System.out.println("\nServidor à espera de ligacoes no porto " + port);
 
+		PrintWriter writer1 = new PrintWriter("SocketTCP.txt");
+		writer1.print("");
+		writer1.close();
+		PrintWriter writer2 = new PrintWriter("JavaRMI.txt");
+		writer2.print("");
+		writer2.close();
+
 		while (true) {
 			try {
 

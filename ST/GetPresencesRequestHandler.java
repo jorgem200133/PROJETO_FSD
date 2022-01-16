@@ -114,7 +114,7 @@ public class GetPresencesRequestHandler extends Thread {
 						PrintWriter printsocket;
 						try {
     						printsocket = new PrintWriter("SocketTCP.txt");
-    						printsocket.println(descricao + " " + ipSR + portoSR + " " + ipSR + " " + portoSR+ " "+ instant);
+    						printsocket.println(descricao + " " + ipSR +"," + portoSR + " " + ipSR + " " + portoSR+ " "+ instant);
     						printsocket.close();
 							} catch (FileNotFoundException e) {
     							System.err.println("File doesn't exist");
@@ -126,7 +126,7 @@ public class GetPresencesRequestHandler extends Thread {
 						PrintWriter printjavarmi;
 						try {
     						printjavarmi = new PrintWriter("JavaRMI.txt");
-    						printjavarmi.println(descricao + " " + ipSR + portoSR + name + " " + ipSR + " " + portoSR + " " + name + " "+ instant);
+    						printjavarmi.println(descricao + " " + ipSR +","+ portoSR +"," + name + " " + ipSR + " " + portoSR + " " + name + " "+ instant);
     						printjavarmi.close();
 							} catch (FileNotFoundException e) {
     							System.err.println("File doesn't exist");
