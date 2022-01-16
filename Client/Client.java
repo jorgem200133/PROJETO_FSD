@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 //import java.util.Date;
 import java.time.Instant;
+import java.net.SocketTimeoutException;
 
 public class Client {
 
@@ -79,6 +80,7 @@ public class Client {
     		    	String ip = scanner.nextLine();
     		    	System.out.print(" * Introduza um Identificador Unico seu (Ex.: nº CC, NIF,...): ");
     		    	String id = scanner.nextLine();
+    		    	try{
 
 					InetAddress serverAddress = InetAddress.getByName(servidor);
 
@@ -86,39 +88,38 @@ public class Client {
 
 					ligacao = new Socket(serverAddress, porto);
 
+					BufferedReader in = new BufferedReader(new InputStreamReader(ligacao.getInputStream()));
 
-					try {
-						BufferedReader in = new BufferedReader(new InputStreamReader(ligacao.getInputStream()));
+					PrintWriter out = new PrintWriter(ligacao.getOutputStream(), true);
 
-						PrintWriter out = new PrintWriter(ligacao.getOutputStream(), true);
+					String request = "get" + " " + ip + " " + id;
 
-						String request = "get" + " " + ip + " " + id;
+					out.println(request);
 
-						out.println(request);
+					String msg;
 
-						String msg;
-
-						int length=0;
-						while((msg = in.readLine())!= null){
+					int length=0;
+					while((msg = in.readLine())!= null){
 						if(length == 0) {System.out.println("\n *		Chave de Acesso: " +msg +";\n");}
-						if(length == 1) {System.out.println(" 	*		Ip do Servico de Tickting: " +msg +";\n");}
-						else {if (length ==2) {System.out.println("*		Porto do Servico de Ticketing: " + msg +";\n");}
+						if(length == 1) {System.out.println(" *		Ip do Servico de Tickting: " +msg +";\n");}
+						else {if (length ==2) {System.out.println(" *		Porto do Servico de Ticketing: " + msg +";\n");}
 						}
-						length+=1;
-  						  }
+					length+=1;
+  					}
 
-						ligacao.close();
+					ligacao.close();
 
 						//System.out.println("Terminou a ligacao!");
 					} catch (IOException e) {
-						System.out.println("Erro ao comunicar com o servidor: " + e);
+						System.out.println("Erro ao comunicar com o de Indentificacao: " + e);
 					}
+					
 					break;
     		    }
             		
         		case 2:
         		    {
-        		    System.out.println("		E importante referir que para se conectar ao\nServico de Tickting e necessario passar pelo passo 1!\n");	
+        		    System.out.println("E importante referir que para se conectar ao\nServico de Tickting e necessario passar pelo passo 1!\n");	
         		    System.out.print("Pretende continuar (S/N:) ");
         		    Scanner scanner = new Scanner(System.in);
         		    char r = scanner.next().charAt(0);
@@ -161,12 +162,14 @@ public class Client {
     		    			case 1:
     		    			{
 
-    		    				InetAddress serverAddress = InetAddress.getByName(ipST);
-
-								Socket ligacao = null;
-
-								ligacao = new Socket(serverAddress, portoST);
     		    				try {
+
+    		    					InetAddress serverAddress = InetAddress.getByName(ipST);
+
+									Socket ligacao = null;
+
+									ligacao = new Socket(serverAddress, portoST);
+									
 									BufferedReader in = new BufferedReader(new InputStreamReader(ligacao.getInputStream()));
 
 									PrintWriter out = new PrintWriter(ligacao.getOutputStream(), true);
@@ -201,10 +204,11 @@ public class Client {
 										//st.print();//System.out.println("\n"+msg2);
 									}
 									//st.print();
+									ligacao.close();
 								} catch (IOException e) {
-									System.out.println("Erro ao comunicar com o servidor: " + e);
+									System.out.println("Erro ao comunicar com o Servico de Ticketing: " + e);
 								}	
-								ligacao.close();
+								
 								 
 								break;  		
 
@@ -230,17 +234,15 @@ public class Client {
     								System.out.print("Introduza o Timestamp do Serviço: ");
     								timestamp = infoSR.nextLine();
     		    					
-    		    				
-
-    		    					InetAddress serverAddress1 = InetAddress.getByName(ipSR);
-
-									Socket ligacao1 = null;
-
-									ligacao1 = new Socket(serverAddress1, portoSR);
-
-
 
     		    					try {
+
+    		    						InetAddress serverAddress1 = InetAddress.getByName(ipSR);
+
+										Socket ligacao1 = null;
+
+										ligacao1 = new Socket(serverAddress1, portoSR);
+
 										BufferedReader in = new BufferedReader(new InputStreamReader(ligacao1.getInputStream()));
 
 										PrintWriter out = new PrintWriter(ligacao1.getOutputStream(), true);
@@ -255,12 +257,12 @@ public class Client {
 										}
 
 										
-
+										ligacao1.close();
 									//System.out.println("Terminou a ligacao!");
 									} catch (IOException e) {
-										System.out.println("Erro ao comunicar com o servidor: " + e);
+										System.out.println("Erro ao comunicar com o Servico "+ descricao + ": " + e);
 									}	    	
-									ligacao1.close();	
+										
 
     		    				}
 
