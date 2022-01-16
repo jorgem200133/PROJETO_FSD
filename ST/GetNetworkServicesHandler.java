@@ -14,9 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.time.Instant;
 
-public class GetPresencesRequestHandler extends Thread {
+public class GetNetworkServicesHandler extends Thread {
 	Socket ligacao;
-	Presences presences;
+	NetworkServices services;
 	BufferedReader in;
 	PrintWriter out;
 
@@ -26,9 +26,9 @@ public class GetPresencesRequestHandler extends Thread {
 	
 	//private static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'SSSZZZZ");
 	
-	public GetPresencesRequestHandler(Socket ligacao, Presences presences) {
+	public GetNetworkServicesHandler(Socket ligacao, NetworkServices services) {
 		this.ligacao = ligacao;
-		this.presences = presences;
+		this.services = services;
 		try {
 			this.in = new BufferedReader(new InputStreamReader(ligacao.getInputStream()));
 
@@ -113,9 +113,11 @@ public class GetPresencesRequestHandler extends Thread {
 					Instant instant = timestamp.toInstant();
 					if (tecnologia.equals("SocketTCP")){
 						PrintWriter printsocket;
+						String registo=readFile("SocketTCP.txt");
 						try {
     						printsocket = new PrintWriter("SocketTCP.txt");
-    						printsocket.println(descricao + " " + ipSR +"," + portoSR + " " + ipSR + " " + portoSR+ " "+ instant);
+    						printsocket.print(registo);
+    						printsocket.print(descricao + " " + ipSR +"," + portoSR + " " + ipSR + " " + portoSR+ " "+ instant);
     						printsocket.close();
 							} catch (FileNotFoundException e) {
     							System.err.println("File doesn't exist");
@@ -125,9 +127,11 @@ public class GetPresencesRequestHandler extends Thread {
 					if (tecnologia.equals("JavaRMI")){
 						String name = tokens.nextToken();
 						PrintWriter printjavarmi;
+						String registo=readFile("JavaRMI.txt");
 						try {
     						printjavarmi = new PrintWriter("JavaRMI.txt");
-    						printjavarmi.println(descricao + " " + ipSR +","+ portoSR +"," + name + " " + ipSR + " " + portoSR + " " + name + " "+ instant);
+    						printjavarmi.print(registo);
+    						printjavarmi.print(descricao + " " + ipSR +","+ portoSR +"," + name + " " + ipSR + " " + portoSR + " " + name + " "+ instant);
     						printjavarmi.close();
 							} catch (FileNotFoundException e) {
     							System.err.println("File doesn't exist");

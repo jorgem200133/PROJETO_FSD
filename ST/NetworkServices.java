@@ -1,11 +1,11 @@
 import java.util.*;
 
-public class Presences {
+public class NetworkServices {
 
 	private static Hashtable<String, IPInfo> presentIPs = new Hashtable<String, IPInfo>();
 	private static int cont = 0;
 
-	public Vector<String> getPresences(String IPAddress) {
+	public Vector<String> getNetworkServices(String IPAddress) {
 
 		long actualTime = new Date().getTime();
 		cont = cont + 1;

@@ -1,13 +1,13 @@
 import java.net.*;
 import java.io.*;
 
-public class presencesServer {
+public class ServicoT {
 	static int DEFAULT_PORT = 3122;
 
 	public static void main(String[] args) throws IOException {
 		int port = DEFAULT_PORT;
 
-		Presences presences = new Presences();
+		NetworkServices presences = new NetworkServices();
 
 		ServerSocket servidor = null;
 
@@ -33,7 +33,7 @@ public class presencesServer {
 				Socket ligacao = servidor.accept();
 
 				// Start a GetPresencesRequestHandler thread
-				GetPresencesRequestHandler request = new GetPresencesRequestHandler(ligacao, presences);
+				GetNetworkServicesHandler request = new GetNetworkServicesHandler(ligacao, presences);
 				request.start();
 
 			} catch (IOException e) {
