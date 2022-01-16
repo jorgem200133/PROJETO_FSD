@@ -67,9 +67,7 @@ public class GetSTInfoRequestHandler extends Thread {
        				 System.err.println("I'm sorry, but MD5 is not a valid message digest algorithm");
     			}
 
-				//response2 = hashtext +"\n";
-				//response2 += ST_HOST + "\n";
-				//response2 += ST_PORTO;
+				
 				Vector<String> ipList = presences.getSIConnection(ip);
 				response += ipList.size() + "\n";
 				for (Iterator<String> it = ipList.iterator(); it.hasNext();) {
@@ -77,7 +75,6 @@ public class GetSTInfoRequestHandler extends Thread {
 					response += next + ";";
 				}
 				System.out.println(response);
-				//out.println(response2);
 			} else
 				out.println("201;method not found");
 

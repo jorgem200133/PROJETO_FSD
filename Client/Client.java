@@ -15,6 +15,12 @@ public class Client {
 	static final int SI_PORTO = 2000; 
 	static final String SI_HOST = "127.0.0.1"; //IP e PORTO do Serviço de Identificação
 
+	public static void connectServiceRMI(String ip_servico, String nome_servico, String timestamp) {
+    	getTemperature handler;
+        handler = new getTemperature(ip_servico, nome_servico, Instant.parse(timestamp));
+        handler.putTemperature();
+    }
+
 	public static int menu() {
 
    		int selection;
@@ -124,11 +130,6 @@ public class Client {
     		    		System.out.print(" *		Porto do Serviço de Ticketing: ");
     		    		int portoST = scanner1.nextInt();
 
-    		    		InetAddress serverAddress = InetAddress.getByName(ipST);
-
-						Socket ligacao = null;
-
-						ligacao = new Socket(serverAddress, portoST);
 						System.out.println("+*******************************************+");
 						System.out.println("*	                                    ");
 						System.out.println("*	BEM VINDO AO SISTEMA DE TICKTING    ");
@@ -144,8 +145,9 @@ public class Client {
     		    		int tcnSR = scanner2.nextInt();	
     		    		
     		    		do{
-    		    		String msg="";
+    		    		String msg2="";
     		    		choice = menu2(tcnSR);
+
     		    		int accessKeylength=0;
     		    		String ipSR=null;
     		    		String nomeSR=null;
@@ -158,6 +160,12 @@ public class Client {
     		    		switch(choice){
     		    			case 1:
     		    			{
+
+    		    				InetAddress serverAddress = InetAddress.getByName(ipST);
+
+								Socket ligacao = null;
+
+								ligacao = new Socket(serverAddress, portoST);
     		    				try {
 									BufferedReader in = new BufferedReader(new InputStreamReader(ligacao.getInputStream()));
 
@@ -166,14 +174,38 @@ public class Client {
 									String request = "get" + " " + idC + " " + hashC +" " + tcnSR ;
 
 									out.println(request);
-
-									msg=in.readLine();
-									System.out.println(msg);
-
-
+									String msg1;
+									int length=0;
+									//CommandLineTable st = new CommandLineTable();
+									if(tcnSR==2){ 
+										CommandLineTable st = new CommandLineTable();
+										st.setHeaders("Descricao", "Chave de Acesso", "Ip", "Porto","Timestamp");
+										while((msg1 = in.readLine())!= null){
+											if(msg1.equals("")){break;}
+											StringTokenizer servicoRede = new StringTokenizer(msg1);
+											st.addRow(servicoRede.nextToken(), servicoRede.nextToken(), servicoRede.nextToken(), servicoRede.nextToken(), servicoRede.nextToken());
+											//msg2+=msg1+"\n";
+										}
+										st.print();
+										//System.out.println("\n"+msg2);
+									}
+									if(tcnSR==1){ 
+										CommandLineTable st = new CommandLineTable();
+										st.setHeaders("Descricao", "Chave de Acesso", "Ip", "Porto","Nome","Timestamp");
+										while((msg1 = in.readLine())!= null){
+											if(msg1.equals("")){break;}
+											StringTokenizer servicoRede = new StringTokenizer(msg1," ");
+											st.addRow(servicoRede.nextToken(), servicoRede.nextToken(), servicoRede.nextToken(), servicoRede.nextToken(), servicoRede.nextToken(), servicoRede.nextToken());
+											//msg2+=msg1+"\n";
+										}
+										st.print();//System.out.println("\n"+msg2);
+									}
+									//st.print();
 								} catch (IOException e) {
 									System.out.println("Erro ao comunicar com o servidor: " + e);
-								}	  
+								}	
+								ligacao.close();
+								 
 								break;  		
 
     		    			}
@@ -188,8 +220,8 @@ public class Client {
 
     								while (sr.hasMoreElements() && accessKeylength<2)   
     								{    
-    									if(accessKeylength == 0) {ipSR=sr.nextToken();System.out.println(ipSR+"\n");}
-										if(accessKeylength == 1) {portoSR=Integer.parseInt(sr.nextToken());System.out.println(portoSR+"\n");}
+    									if(accessKeylength == 0) {ipSR=sr.nextToken();System.out.println(ipSR);}
+										if(accessKeylength == 1) {portoSR=Integer.parseInt(sr.nextToken());System.out.println(portoSR);}
 										accessKeylength++;
     								    //System.out.println(sr.nextToken());    
     								}  
@@ -204,26 +236,31 @@ public class Client {
 
 									Socket ligacao1 = null;
 
-									ligacao1 = new Socket(serverAddress1,(int) portoSR);
+									ligacao1 = new Socket(serverAddress1, portoSR);
+
+
 
     		    					try {
-										BufferedReader in = new BufferedReader(new InputStreamReader(ligacao.getInputStream()));
+										BufferedReader in = new BufferedReader(new InputStreamReader(ligacao1.getInputStream()));
 
-										PrintWriter out = new PrintWriter(ligacao.getOutputStream(), true);
+										PrintWriter out = new PrintWriter(ligacao1.getOutputStream(), true);
 	
 										String request = "get" + descricao + " " + timestamp ;
-
+										
 										out.println(request);
-										String msgSR=in.readLine();
-										//while(msgSR=in.readLine()){
+										String msgSR;
+										while((msgSR=in.readLine())!=null){
 											System.out.println(msgSR);
-										//}
+											
+										}
+
 										
 
 									//System.out.println("Terminou a ligacao!");
 									} catch (IOException e) {
 										System.out.println("Erro ao comunicar com o servidor: " + e);
-									}	    		
+									}	    	
+									ligacao1.close();	
 
     		    				}
 
@@ -237,27 +274,16 @@ public class Client {
 										accessKeylength++;
     								    //System.out.println(sr.nextToken());    
     								}  
+    								System.out.print("Introduza o Timestamp do Serviço: ");
+    								timestamp = infoSR.nextLine();
 
-    								BufferedReader bufReader = new BufferedReader(new StringReader(msg));
-    								String line=null;
-    								while( (line=bufReader.readLine()) != null ){
-    									StringTokenizer tokens = new StringTokenizer(line);
-    									descricao = tokens.nextToken();
-    									if(accessKey.equals(tokens.nextToken())){
-    										tokens.nextToken();
-    										tokens.nextToken();
-    										tokens.nextToken();
-    										timestamp= tokens.nextToken();
-    										break;
-    									}
+    								connectServiceRMI(ipSR, nomeSR, timestamp);
+
 
     		    					}
-    		    					if(timestamp.length()==0) {
-    		    						System.out.println("ERRO: Não Se encontra nenhum Servico com a Chave "+ accessKey+ " para consulta!\nAceda a opcao 1 para ver serviços disponiveis.");
-    		    						break;}
-    		    				
+    		    				break;
     		    				}
-    		    			}
+
     		    			case 3: break;
     		    			default: break;
     		    		}
@@ -265,7 +291,7 @@ public class Client {
 						
 						}while(choice!=3);
 
-						ligacao.close();
+						
         		    	}
         		    	break;
         		    	}

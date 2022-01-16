@@ -28,6 +28,10 @@ public class Admin {
     }
 
 	public static void main(String[] args) throws IOException {
+		System.out.println("+*********************************************************************************+");
+		System.out.println("*	                                          ");
+		System.out.println("*	BEM VINDO AO SERVICO DE TICKETING (ADMINISTRADOR)     ");
+		System.out.println("*	                                          ");
 
 		int choice;
 		do {
@@ -35,18 +39,6 @@ public class Admin {
     		
     		String servidor = ST_HOST;
 			int porto = ST_PORTO;
-					
-
-			InetAddress serverAddress = InetAddress.getByName(servidor);
-
-			Socket ligacao = null;
-
-			ligacao = new Socket(serverAddress, porto);
-					
-			System.out.println("+*********************************************************************************+");
-			System.out.println("*	                                          ");
-			System.out.println("*	BEM VINDO AO SISTEMA DE TICKETING (ADMINISTRADOR)     ");
-			System.out.println("*	                                          ");
 			
 			choice = menu();
    			switch (choice){
@@ -61,8 +53,14 @@ public class Admin {
     		  		System.out.print(" * Porto: ");
     		    	String portoSR = scanner.nextLine();
 
+    		    	InetAddress serverAddress = InetAddress.getByName(servidor);
 
+					Socket ligacao = null;
+
+					ligacao = new Socket(serverAddress, porto);
+					
 					try {
+
 						BufferedReader in = new BufferedReader(new InputStreamReader(ligacao.getInputStream()));
 
 						PrintWriter out = new PrintWriter(ligacao.getOutputStream(), true);
@@ -82,7 +80,7 @@ public class Admin {
     		    }
             		
         		case 2:{
-    				System.out.print("\nIntroduza os seguintes dados acerca do Servico ed Rede a introduzir\nTecnologia: SocketTCP\n");
+    				System.out.print("\nIntroduza os seguintes dados acerca do Servico ed Rede a introduzir\n");
 					System.out.print("->Descricao: ");
     		    	Scanner scanner = new Scanner(System.in);
     		    	String descricao = scanner.nextLine();
@@ -94,6 +92,11 @@ public class Admin {
     		    	System.out.print(" * Nome: ");
     		    	String nameSR = scanner.nextLine();
 
+    		    	InetAddress serverAddress = InetAddress.getByName(servidor);
+
+					Socket ligacao = null;
+
+					ligacao = new Socket(serverAddress, porto);
 
 					try {
 						BufferedReader in = new BufferedReader(new InputStreamReader(ligacao.getInputStream()));

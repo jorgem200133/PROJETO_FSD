@@ -95,6 +95,7 @@ public class GetPresencesRequestHandler extends Thread {
 					}
 				}
         	    else {out.println("Não foi possivel Conectar");}
+        	    
 
         		}
             	catch (NoSuchAlgorithmException e) {
@@ -135,7 +136,7 @@ public class GetPresencesRequestHandler extends Thread {
 					}
 				}
 			}
-				out.println("201;method not found");
+				
 
 			out.flush();
 			in.close();
