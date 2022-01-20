@@ -24,9 +24,9 @@ public class getTemperature {
 
 		try {
 
-			ServicesInterface temperature= (ServicesInterface) LocateRegistry.getRegistry(SERVICE_IP).lookup(SERVICE_NAME);
-		
-			float temperatura = temperature.getTemperature(tsp);
+			ServicesInterface temps = (ServicesInterface) LocateRegistry.getRegistry(SERVICE_IP).lookup(SERVICE_NAME);
+			
+			float temperatura = temps.getTemp(tsp);
 			
 			if(temperatura==9999.9999f){
 				System.out.println("Erro RMI");

@@ -1,4 +1,3 @@
-import java.time.Instant;
 import java.util.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,22 +5,18 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files; 
 import java.nio.file.Path;
 import java.nio.file.Paths; 
-import java.util.ArrayList; import java.util.List;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.time.*;
 
 
-public class Sources extends UnicastRemoteObject implements ServicesInterface {
+
+
+public class Sources {
 
 	private static Hashtable<String, DataStructure> presentData = new Hashtable<String, DataStructure>();
-	private static int  cont, orderActual=1;
+	private static int  cont, orderActual=0;	
 	private static String filename= "log_temp.csv";
-	
-	public Sources() throws RemoteException {
-		super();
-		loadData();
-	}
 	
 	public void loadData(){
 			List<String> dtset = new ArrayList<>();
@@ -38,7 +33,7 @@ public class Sources extends UnicastRemoteObject implements ServicesInterface {
 					// adding data into HashTable PresentData
 					// read next line before looping
 					// if end of file reached, line would be null
-					//this.setOrderActual();
+					this.setOrderActual();
 					line = br.readLine();
 				}
 			} catch (IOException ioe) { 
@@ -47,58 +42,65 @@ public class Sources extends UnicastRemoteObject implements ServicesInterface {
 
 	}
 	
-	public Float getTemperature(Instant tsp){
-		float result = 9999.9999f;		
-		
-		if (this.getStampValidation(tsp)==1) {
-			for (Enumeration<DataStructure> e = presentData.elements(); e.hasMoreElements(); ) {
-				DataStructure element = e.nextElement();
-
-				if (element.getOrd() == next()) {
-					result = element.getTemperatura();
-					next();
-				}
+	public float getHumidity(){
+		float result = 0;
+		for (Enumeration<DataStructure> e = presentData.elements(); e.hasMoreElements(); ) {
+			DataStructure element = e.nextElement();
+			if(element.getOrd()==getOrder()){
+				result=element.getHum();
+				setOrderActual();
 			}
 		}
 		return result;
 	}
 
-	public int getStampValidation(Instant timeIn){
+	public int getStampValidation(String time){
 		Instant timestamp = Instant.now();
-		System.out.println("Now: " + timestamp);
-		long res = timestamp.toEpochMilli() - timeIn.toEpochMilli();
-		if (res > 180*1000) return 0;
+		System.out.println("now: " + timestamp);
+		try {
+			Instant timeIn = Instant.parse(time);
+			
+			long res = timestamp.toEpochMilli() - timeIn.toEpochMilli();
+			if (res > 180*1000){
+				return 0;
+			} 
 		else return 1;
+		} catch (java.time.format.DateTimeParseException dtpe) { 
+				return 2;
+		}
 	}
-	
-	public int next () {
-		if (orderActual+1>=presentData.size()){/*Máximo de dados obter do ficheiro*/
-			orderActual=1;
+
+
+	public int getOrder () {
+		if (this.orderActual>=presentData.size()){/*Máximo de dados obter do ficheiro*/
+			this.orderActual=1;
 			return 1;
 		}
-		else
-		{
-			return ++orderActual;
+		else{
+			//setOrderActual();
+			return this.orderActual;
 		}
 	}
-/*	public void setOrderActual () {
+	public void setOrderActual () {
 			this.orderActual+=1;
-	}*/
-	//Construir o objeto na implementação da Interface...
-	public void getDtSet(String[] metadata)  throws RemoteException {
-		cont = cont+1;
+	}
+	
+	private void getDtSet(String[] metadata) {
+
 		synchronized(this) {
 			if(metadata.length>3){
 				if(!(metadata[2]=="Error") && !(metadata[3]=="Error")){
 					String dat=metadata[0];
 					float tmp=Float.parseFloat(metadata[2].substring(2));
-					float hum=Float.parseFloat(metadata[3].substring(2));
+					float hum=Float.parseFloat(metadata[3].substring(2));							
 					DataStructure dataSt = new DataStructure(cont,dat, tmp, hum);
 					presentData.put(String.valueOf(cont),dataSt);
-				}else{cont-=1;}
-			}else{cont-=1;}
+					cont = cont+1;
+				}
+			}
 
 		}
+
 	}
 }
 
@@ -117,8 +119,8 @@ class DataStructure {
 		this.humidity = Humidity;	
 	}
 
-	public float getTemperatura () {
-		return this.temperature;
+	public float getHum () {
+		return this.humidity;
 	}
 	public int 	getOrd () {
 		return this.order;

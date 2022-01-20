@@ -24,12 +24,12 @@ public class getTemperature {
 
 		try {
 
-			ServicesInterface temperature= (ServicesInterface) LocateRegistry.getRegistry(SERVICE_IP).lookup(SERVICE_NAME);
-		
-			float temperatura = temperature.getTemperature(tsp);
+			ServicesInterface temps = (ServicesInterface) LocateRegistry.getRegistry(SERVICE_IP).lookup(SERVICE_NAME);
+			
+			float temperatura = temps.getTemperature(tsp);
 			
 			if(temperatura==9999.9999f){
-				System.out.println("Erro RMI");
+				System.out.println("Tempo de acesso esgotado!");
 			}else{
 				System.out.println("Temperatura: " + temperatura);
 			}
