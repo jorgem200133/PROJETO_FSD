@@ -248,10 +248,9 @@ public class Client {
 											
 											//String registo=readFile("SocketTCP.txt");
 										
-
-											st.print();
-											msg2+=msg1+"\n";
+											msg2+=msg1;
 										}
+										st.print();
 										try {
 											PrintWriter printsocket;
     										printsocket = new PrintWriter("SocketTCP.txt");
@@ -284,9 +283,10 @@ public class Client {
 											//PrintWriter printRMI;
 											//String registo=readFile("JavaRMI.txt");
 										
-											msg2+=msg1+"\n";
-											st.print();//msg2+=msg1+"\n";
+											msg2+=msg1;
+											//msg2+=msg1+"\n";
 										}
+										st.print();
 										try {
 											PrintWriter printRMI;
     										printRMI = new PrintWriter("JavaRMI.txt");

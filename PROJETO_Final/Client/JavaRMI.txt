@@ -1,1 +1,1 @@
-Temperature 127.0.0.1,1099,/TemperatureService 127.0.0.1 1099 /TemperatureService 2022-01-20T10:52:36.332Z
+Temperature 127.0.0.1,1099,/TemperatureService 127.0.0.1 1099 /TemperatureService 2022-01-20T12:22:12.324Z Temperature 127.0.0.1,1099,/TemperatureService 127.0.0.1 1099 /TemperatureService 2022-01-20T12:22:03.429Z 

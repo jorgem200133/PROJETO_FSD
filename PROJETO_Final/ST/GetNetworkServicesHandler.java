@@ -117,7 +117,7 @@ public class GetNetworkServicesHandler extends Thread {
 						try {
     						printsocket = new PrintWriter("SocketTCP.txt");
     						
-    						printsocket.print(descricao + " " + ipSR +"," + portoSR + " " + ipSR + " " + portoSR+ " "+ instant);
+    						printsocket.print(descricao + " " + ipSR +"," + portoSR + " " + ipSR + " " + portoSR+ " "+ instant+" \n");
     						printsocket.print(registo);
     						printsocket.close();
 							} catch (FileNotFoundException e) {
@@ -132,7 +132,7 @@ public class GetNetworkServicesHandler extends Thread {
 						try {
     						printjavarmi = new PrintWriter("JavaRMI.txt");
     						
-    						printjavarmi.print(descricao + " " + ipSR +","+ portoSR +"," + name + " " + ipSR + " " + portoSR + " " + name + " "+ instant);
+    						printjavarmi.print(descricao + " " + ipSR +","+ portoSR +"," + name + " " + ipSR + " " + portoSR + " " + name + " "+ instant+" \n");
     						printjavarmi.print(registo);
     						printjavarmi.close();
 							} catch (FileNotFoundException e) {
